@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>방 만들기</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>➕ 채팅방 만들기</h1>
+
+    <input
+        type="text"
+        id="roomName"
+        placeholder="채팅방 이름"
+    >
+
+    <textarea
+        id="roomDesc"
+        placeholder="채팅방 설명"
+    ></textarea>
+
+    <button onclick="createRoom()">
+        방 생성
+    </button>
+</div>
+
+<script src="create-room.js"></script>
+
+</body>
+</html>

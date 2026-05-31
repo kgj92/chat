@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenChat</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:sans-serif;
+}
+
+body{
+    background:#ffffff;
+    color:blue;
+}
+
+header{
+    padding:20px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.search{
+    padding:0 20px;
+}
+
+.search input{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#f3f3f3;
+    color:black;
+}
+
+#roomList{
+    padding:20px;
+}
+
+.room{
+    background:#9ccaff;
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:10px;
+    cursor:pointer;
+    color:black;
+}
+
+.fab{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    width:60px;
+    height:60px;
+    border:none;
+    border-radius:50%;
+    font-size:30px;
+    background:blue;
+    color:white;
+}
+</style>
+</head>
+
+<body>
+
+<div style="text-align:right;padding:10px;">
+    <button onclick="로그인()">로그인</button>
+</div>
+
+<header>OpenChat</header>
+
+<div class="search">
+    <input type="text" placeholder="채팅방 검색">
+</div>
+
+<div id="roomList"></div>
+
+<button class="fab" onclick="createRoom()">+</button>
+
+<script>
+
+function 로그인(){
+    location.href = "login.html";
+}
+
+// 방 생성
+function createRoom(){
+
+    const roomName = prompt("방 이름 입력");
+    if(!roomName) return;
+
+    const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+
+    rooms.push({
+        id: String(Date.now()),   // ⭐ 중요: 문자열 통일
+        name: roomName
+    });
+
+    localStorage.setItem("rooms", JSON.stringify(rooms));
+
+    renderRooms();
+}
+
+// 방 클릭
+function enterRoom(roomId){
+
+    console.log("CLICK ROOM:", roomId);
+
+    localStorage.setItem("currentRoom", String(roomId));
+
+    location.href = "chat.html";
+}
+
+// 방 리스트 출력
+function renderRooms(){
+
+    const roomList = document.getElementById("roomList");
+
+    roomList.innerHTML = "";
+
+    const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+
+    rooms.forEach(room => {
+
+        roomList.innerHTML += `
+            <div class="room"
+                onclick="enterRoom('${room.id}')">
+                ${room.name}
+            </div>
+        `;
+
+    });
+}
+
+renderRooms();
+
+</script>
+
+</body>
+</html>
